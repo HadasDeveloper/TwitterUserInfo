@@ -7,7 +7,9 @@ namespace TwitterManager.Models
         public const string SqlGetMinMessageIdForUser = "select convert(nvarchar(18), min(messageid)) minId from TService_rowdata where ScreenName = '{0}'";
         public const string SqlGetMaxMessageIdForUser = "select convert(nvarchar(18), max(messageid)) maxId from TService_rowdata where ScreenName = '{0}'";
         //public const string SqlGetScreenNames = "usp_TService_get_screen_names";
-        public const string SqlGetScreenNames= "select top 100 screenName from TService_ScreenNamesToLoad where screenName not in (select screenName from [TService_UserInfo])";
+        //public const string SqlGetScreenNames= "select top 100 screenName from TService_ScreenNamesToLoad where screenName not in (select screenName from [TService_UserInfo])";
+        public const string SqlGetScreenNames = "usp_TService_get_screen_names_for_info_update";
+        public const string SqlUpdateScreenNames_finished = "update TService_ScreenNamesToLoad_temp set finish = 'true' where screenname = '{0}'";
         public const string SqlUpdateScreenNames_LastUpdated = "update TService_ScreenNamesToLoad set lastupdated = getdate() where screenname = '{0}'";
         public const string SqlUpdateScreenNames_Deactivate = "update TService_ScreenNamesToLoad set lastupdated = getdate(), active = 0 where screenname = '{0}'";
         public const string SqlInsertRowsUpdateLog = "insert into tservice_rowsupdatelog(hostName,updatedate,numofrowes)values('{0}',GETDATE( ),{1})";

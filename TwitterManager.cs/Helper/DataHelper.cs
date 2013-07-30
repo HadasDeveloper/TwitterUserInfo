@@ -8,10 +8,10 @@ namespace TwitterManager.Helper
 {
     public class DataHelper
     {
-        private const string ConnectionString = " Data Source=tcp:esql2k801.discountasp.net;Initial Catalog=SQL2008_856748_ntrlabs;User ID=SQL2008_856748_ntrlabs_user;Password=bbking;connection timeout=3600";
-        private const string DefaultDB = "SQL2008_856748_ntrlabs";
-        //private const string ConnectionString = " Data Source=SERVER02\\SQLSERVER;Initial Catalog=Dev;User ID=DevUser;Password=m4ffCr113P3vqOGGtuTW;connection timeout=3600";
-        //private const string DefaultDB = "Dev";
+        //private const string ConnectionString = " Data Source=tcp:esql2k801.discountasp.net;Initial Catalog=SQL2008_856748_ntrlabs;User ID=SQL2008_856748_ntrlabs_user;Password=bbking;connection timeout=3600";
+        //private const string DefaultDB = "SQL2008_856748_ntrlabs";
+        private const string ConnectionString = " Data Source=SERVER02\\SQLSERVER;Initial Catalog=Dev;User ID=DevUser;Password=m4ffCr113P3vqOGGtuTW;connection timeout=3600";
+        private const string DefaultDB = "Dev";
 
         [ThreadStatic]
         private static SqlConnection _connection;
@@ -111,6 +111,11 @@ namespace TwitterManager.Helper
                 executeSQLString.Replace("\'\'", "null");
 
                 ExecuteSQL(executeSQLString);
+
+                //set finish
+                executeSQLString = string.Format(StoredProcedures.SqlUpdateScreenNames_finished, item.ScreenName);
+                ExecuteSQL(executeSQLString);
+
             }
         }
 
@@ -221,6 +226,11 @@ namespace TwitterManager.Helper
         public static void InsertRowsUpdateLog(string hostName, int numOfRowes)
         {
             ExecuteSQL(string.Format(StoredProcedures.SqlInsertRowsUpdateLog,  hostName, numOfRowes));
+        }
+
+        public static void UpdateScreenNames_finished(string screenName)
+        {
+            ExecuteSQL(string.Format(StoredProcedures.SqlUpdateScreenNames_finished, screenName));
         }
         
         public static void UpdateScreenNames_LastUpdated(string screenName)

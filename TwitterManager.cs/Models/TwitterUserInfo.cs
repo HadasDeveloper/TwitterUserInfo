@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Globalization;
 
 namespace TwitterManager.Models
 {
     public class TwitterUserInfo
     {
-        public int Id { get; set; }		
-        public string IdStr { get; set; }		
-        public string Name { get; set; }		
-        public string ScreenName { get; set; }		
-        public string Location { get; set; }		
-        public string Description { get; set; }		
-        public string Url { get; set; }				
-        public string Urls { get; set; }		
+        public int Id { get; set; }
+        public string IdStr { get; set; }
+        public string Name { get; set; }
+        public string ScreenName { get; set; }
+        public string Location { get; set; }
+        public string Description { get; set; }
+        public string Url { get; set; }
+        public string Urls { get; set; }
         public string Protected { get; set; }
         public int FollowersCount { get; set; }
         public int FriendsCount { get; set; }
@@ -51,23 +50,34 @@ namespace TwitterManager.Models
 
             Id = user.id;
             IdStr = user.id_str;
-            Name = user.name;
-            ScreenName = user.screen_name;
-            Location = user.location;
+
+            string name = user.name;
+            Name = name.Replace('\'', '"');
+
+            string screenName = user.screen_name;
+            ScreenName = screenName.Replace('\'', '"');
+
+            string location = user.location;
+            Location = location.Replace('\'', '"');
 
             string description = user.description;
-            Description = description.Replace('\'','"');
+            Description = description.Replace('\'', '"');
 
             Url = user.url;
-//            Protected = user.protected ;
-            FollowersCount = user.followers_count ;
-            FriendsCount = user.friends_count ;
-            ListedCount = user.listed_count ;
+
+            //            Protected = user.protected ;
+
+            FollowersCount = user.followers_count;
+
+            FriendsCount = user.friends_count;
+
+            ListedCount = user.listed_count;
+
             try
             {
                 string temp = user.created_at;
                 string[] date = temp.Split(' ');// date[] = {ddd, MMM, dd, +0000 ,hh:mm:ss, yyyy}
-                string dateToParse = string.Format("{0} {1}, {2} {3}",date[1], date[2] ,date[5] ,date[3]);
+                string dateToParse = string.Format("{0} {1}, {2} {3}", date[1], date[2], date[5], date[3]);
                 CreatedAt = DateTime.Parse(dateToParse);
                 Console.WriteLine(CreatedAt);
 
@@ -76,33 +86,56 @@ namespace TwitterManager.Models
             {
                 Console.WriteLine(e.Message);
             }
-            FavouritesCount = user.favourites_count ;
+
+            FavouritesCount = user.favourites_count;
 
             UtcOffset = user.utc_offset.Value == null ? 0 : user.utc_offset;
 
-            TimeZone = user.time_zone ;
-            GeoEnabled = user.geo_enabled ;
-            Verified = user.verified ;
-            StatusesCount = user.statuses_count ;
-            Lang = user.lang ;
-            ContributorsEnabled = user.contributors_enabled ;
-            IsTranslator = user.is_translator ;
-            ProfileBackgroundColor = user.profile_background_color ;
-            ProfileBackgroundImageUrl = user.profile_background_image_url ;
-            ProfileBackgroundImageUrlHttps = user.profile_background_image_url_https ;
-            ProfileBackgroundTile = user.profile_background_tile ;
-            ProfileImageUrl = user.profile_image_url ;
-            ProfileImageUrlHttps = user.profile_image_url_https ;
-            ProfileLinkColor = user.profile_link_color ;
-            ProfileSidebarBorderColor = user.profile_sidebar_border_color ;
-            ProfileSidebarFillColor = user.profile_sidebar_fill_color ;
-            ProfileTextColor = user.profile_text_color ;
-            ProfileUseBackgroundImage = user.profile_use_background_image ;
-            DefaultProfile = user.default_profile ;
-            DefaultProfileImage = user.default_profile_image ;
-            Following = user.following ;
-            FollowRequestSent = user.follow_request_sent ;
-            Notifications = user.notifications ;
+            TimeZone = user.time_zone;
+
+            GeoEnabled = user.geo_enabled;
+
+            Verified = user.verified;
+
+            StatusesCount = user.statuses_count;
+
+            Lang = user.lang;
+
+            ContributorsEnabled = user.contributors_enabled;
+
+            IsTranslator = user.is_translator;
+
+            ProfileBackgroundColor = user.profile_background_color;
+
+            ProfileBackgroundImageUrl = user.profile_background_image_url;
+
+            ProfileBackgroundImageUrlHttps = user.profile_background_image_url_https;
+
+            ProfileBackgroundTile = user.profile_background_tile;
+
+            ProfileImageUrl = user.profile_image_url;
+
+            ProfileImageUrlHttps = user.profile_image_url_https;
+
+            ProfileLinkColor = user.profile_link_color;
+
+            ProfileSidebarBorderColor = user.profile_sidebar_border_color;
+
+            ProfileSidebarFillColor = user.profile_sidebar_fill_color;
+
+            ProfileTextColor = user.profile_text_color;
+
+            ProfileUseBackgroundImage = user.profile_use_background_image;
+
+            DefaultProfile = user.default_profile;
+
+            DefaultProfileImage = user.default_profile_image;
+
+            Following = user.following;
+
+            FollowRequestSent = user.follow_request_sent;
+
+            Notifications = user.notifications;
 
         }
     }

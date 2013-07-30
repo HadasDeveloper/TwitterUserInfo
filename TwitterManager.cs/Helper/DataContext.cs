@@ -18,7 +18,12 @@ namespace TwitterManager.Helper
         {
             DataHelper.InsertTwitterItems(items);
         }
-        
+
+        public static void UpdateScreenNames_finished(string screenName)
+        {
+            DataHelper.UpdateScreenNames_finished(screenName);
+        }
+
         public static void InsertRowsUpdateLog(string hostName, int numofrowes)
         {
             DataHelper.InsertRowsUpdateLog(hostName, numofrowes);

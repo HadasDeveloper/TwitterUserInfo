@@ -26,7 +26,14 @@ namespace TwitterManager
             authenticateMessageCounter = 1;
           
             //This function will get the twitter accounts from the db
-            List<ScreenNameToLoad> screenNamesToLoad = DataContext.GetScreenNames();
+            //List<ScreenNameToLoad> screenNamesToLoad = DataContext.GetScreenNames();
+
+            //-----------for debuging
+            List<ScreenNameToLoad> screenNamesToLoad = new List<ScreenNameToLoad>();
+            ScreenNameToLoad tempName = new ScreenNameToLoad();
+            tempName.ScreenName = "Starbucks";
+            screenNamesToLoad.Add(tempName);
+            //-----------
 
             Console.WriteLine(string.Format("Number of screen Names To Load = {0}", screenNamesToLoad.Count));
 
@@ -80,8 +87,8 @@ namespace TwitterManager
                 //DataContext.InsertTwitterItems(users);
                 authenticateMessageCounter++;
 
-                if (authenticateMessageCounter > 100)
-                //if (authenticateMessageCounter > 3)
+                //if (authenticateMessageCounter > 100)
+                if (authenticateMessageCounter > 1)
                 {
                     Console.WriteLine(" authenticate Message Counter = " + authenticateMessageCounter);
                     done = true;
