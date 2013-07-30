@@ -87,8 +87,8 @@ namespace TwitterManager
                 //DataContext.InsertTwitterItems(users);
                 authenticateMessageCounter++;
 
-                //if (authenticateMessageCounter > 100)
-                if (authenticateMessageCounter > 10)
+                if (authenticateMessageCounter > 100)
+                //if (authenticateMessageCounter > 10)
                 {
                     Console.WriteLine(" authenticate Message Counter = " + authenticateMessageCounter);
                     done = true;
