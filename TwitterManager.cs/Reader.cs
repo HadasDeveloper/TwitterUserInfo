@@ -51,7 +51,7 @@ namespace TwitterManager
             Console.WriteLine("Inserting to DB");
             DataContext.InsertTwitterUser(users);
 
-            while (!DataContext.finishedFlag)
+            while (!DataContext.FinishedFlag)
                 Thread.Sleep(500);
 
             Console.WriteLine("Done");
@@ -73,7 +73,7 @@ namespace TwitterManager
 
                 authenticateMessageCounter++;
 
-                if (authenticateMessageCounter > 1)
+                if (authenticateMessageCounter > 100)
                 {
                     Console.WriteLine(" authenticate Message Counter = " + authenticateMessageCounter);
                     done = true;

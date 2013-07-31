@@ -6,51 +6,17 @@ namespace TwitterManager.Helper
 {
     public class DataContext
     {
-        public static bool finishedFlag = false;
+        public static bool FinishedFlag = false;
 
         public static void InsertTwitterUser(List<TwitterUserInfo> items)
         {
             DataHelper.InsertTwitterUser(items);
-            finishedFlag = true;
-        }
-
-        public static void InsertTwitterItems(List<TwitterUserInfo> items)
-        {
-            DataHelper.InsertTwitterItems(items);
+            FinishedFlag = true;
         }
 
         public static void UpdateScreenNames_finished(string screenName)
         {
             DataHelper.UpdateScreenNames_finished(screenName);
-        }
-
-        public static void InsertRowsUpdateLog(string hostName, int numofrowes)
-        {
-            DataHelper.InsertRowsUpdateLog(hostName, numofrowes);
-        }
-
-        public static string GetMinMessageIdForUser(string screenName)
-        {
-            DataTable table = DataHelper.GetMinMessageIdForUser(screenName);
-            string min = table.Rows.Count > 0 ? table.Rows[0].Field<string>("minId") : "";
-            return min;
-        }
-        
-        public static string GetMaxMessageIdForUser(string screenName)
-        {
-            DataTable table = DataHelper.GetMaxMessageIdForUser(screenName);
-            string max = table.Rows.Count > 0 ? table.Rows[0].Field<string>("maxId") : "";
-            return max;
-        }
-        
-        public static void UpdateScreenNames_LastUpdated(string screenName)
-        {
-            DataHelper.UpdateScreenNames_LastUpdated(screenName);
-        }
-       
-        public static void UpdateScreenNames_Deactivate(string screenName)
-        {
-            DataHelper.UpdateScreenNames_Deactivate(screenName);
         }
         
         public static List<ScreenNameToLoad> GetScreenNames()
