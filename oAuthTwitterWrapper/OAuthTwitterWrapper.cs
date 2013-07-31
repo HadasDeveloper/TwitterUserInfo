@@ -22,6 +22,9 @@ namespace OAuthTwitterWrapper
             // Do the timeline
 			var timeLineJson = new Utility().RequstJson(timelineUrl, twitAuthResponse.token_type, twitAuthResponse.access_token);
  
+            if(twitAuthResponse.error!=null)
+                return twitAuthResponse.error;
+            
             if (timeLineJson == string.Empty || timeLineJson == "[]")
                 return null;
 

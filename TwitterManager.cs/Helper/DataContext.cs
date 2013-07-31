@@ -14,6 +14,11 @@ namespace TwitterManager.Helper
             FinishedFlag = true;
         }
 
+        public static void InsertTwitterError(string error, string screenName)
+        {
+            DataHelper.InsertTwitterError(error, screenName);
+        }
+
         public static void UpdateScreenNames_finished(string screenName)
         {
             DataHelper.UpdateScreenNames_finished(screenName);

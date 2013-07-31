@@ -29,7 +29,7 @@ namespace TwitterManager
             //-----------for debuging
             //List<ScreenNameToLoad> screenNamesToLoad = new List<ScreenNameToLoad>();
             //ScreenNameToLoad tempName = new ScreenNameToLoad();
-            //tempName.ScreenName = "a_bh_a";
+            //tempName.ScreenName = "zite";
             //screenNamesToLoad.Add(tempName);
             //-----------
 
@@ -66,6 +66,15 @@ namespace TwitterManager
                 showUserUrl = string.Format(ShowUserFormat, screenName);
 
                 dynamic info = oAuthT.GetMyTimeline(showUserUrl);
+
+
+                string error = Convert.ToString(info);
+                if (error.Contains("The remote server returned an error:"))
+                {    
+                    DataContext.InsertTwitterError(error, screenName);
+                    return;
+                }
+                   
 
                 if(info == null)
                     return;

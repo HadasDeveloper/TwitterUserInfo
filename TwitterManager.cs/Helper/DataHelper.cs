@@ -119,7 +119,10 @@ namespace TwitterManager.Helper
             }
         }
 
-       
+        public static void InsertTwitterError(string error, string screenName)
+        {
+            ExecuteSQL(string.Format(StoredProcedures.SqlInsertTwitterError, error, screenName));
+        }
         public static void UpdateScreenNames_finished(string screenName)
         {
             ExecuteSQL(string.Format(StoredProcedures.SqlUpdateScreenNames_finished, screenName));
