@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.IO;
 using Logger;
 
@@ -33,7 +34,17 @@ namespace oAuthTwitterWrapper
             {
                 //Console.Write("Utility.RequstJson : WebException = " + e.Status); 
                 EventLogWriter logWriter = new EventLogWriter("oAuthTwitterWrapper");
+
                 logWriter.WriteErrorToEventLog("Utility.RequstJson : WebException = " + e.Status);
+                
+                Console.WriteLine("HTTP Status Code: " + e.Status);
+
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    var response = e.Response as HttpWebResponse;
+                    if (response != null)
+                        Console.WriteLine("HTTP Status Code: " + (int)response.StatusCode);
+                }
             }
 
 			return json;

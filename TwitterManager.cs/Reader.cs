@@ -9,10 +9,8 @@ namespace TwitterManager
 {
     public class Reader
     {
-        private List<TwitterUserInfo> users = new List<TwitterUserInfo>();
-        private bool finishedFlag;
-        private bool finishedToProcessScreenName;
-        private bool finishedToProcessPage;
+        private readonly List<TwitterUserInfo> users = new List<TwitterUserInfo>();
+ 
         private int pageCounter;
         private int authenticateMessageCounter;
         private bool done;
@@ -31,7 +29,7 @@ namespace TwitterManager
             //-----------for debuging
             //List<ScreenNameToLoad> screenNamesToLoad = new List<ScreenNameToLoad>();
             //ScreenNameToLoad tempName = new ScreenNameToLoad();
-            //tempName.ScreenName = "Starbucks";
+            //tempName.ScreenName = "a_bh_a";
             //screenNamesToLoad.Add(tempName);
             //-----------
 
@@ -48,12 +46,6 @@ namespace TwitterManager
                     break;
 
                 GetUserInfo(screenNameToLoad.ScreenName);
-
-                //while (!finishedFlag)
-                //    Thread.Sleep(500);
-
-                finishedFlag = false;
-                finishedToProcessScreenName = false;
                 pageCounter = 0;
             }
             Console.WriteLine("Inserting to DB");
@@ -67,11 +59,8 @@ namespace TwitterManager
 
         public void GetUserInfo(string screenName)
         {
-                logWriter.WriteToEventLog(string.Format("screenName = {0}, finishedToProcessScreenName = {1}, PageCount = {2}, finishedToProcessPage = {3}", screenName, finishedToProcessScreenName, pageCounter, finishedToProcessPage));
-
                 pageCounter++;
-                finishedToProcessPage = true;
-
+ 
                 OAuthTwitterWrapper.OAuthTwitterWrapper oAuthT = new OAuthTwitterWrapper.OAuthTwitterWrapper();
 
                 showUserUrl = string.Format(ShowUserFormat, screenName);
@@ -80,22 +69,15 @@ namespace TwitterManager
 
                 if(info == null)
                     return;
-                //TwitterUserInfo items = new TwitterUserInfo(info);
                 users.Add(new TwitterUserInfo(info));
 
-                finishedToProcessScreenName = true;
-                //DataContext.InsertTwitterItems(users);
                 authenticateMessageCounter++;
 
-                if (authenticateMessageCounter > 100)
-                //if (authenticateMessageCounter > 10)
+                if (authenticateMessageCounter > 1)
                 {
                     Console.WriteLine(" authenticate Message Counter = " + authenticateMessageCounter);
                     done = true;
                 }
-
-            finishedFlag = true;
-            logWriter.WriteToEventLog(string.Format("finished readind for {0}", screenName));
         }
 
     }
