@@ -86,7 +86,7 @@ namespace TwitterManager
 
                 authenticateMessageCounter++;
 
-                if (authenticateMessageCounter > 100)
+                if (authenticateMessageCounter > 180)
                 {
                     Console.WriteLine(" authenticate Message Counter = " + authenticateMessageCounter);
                     done = true;
