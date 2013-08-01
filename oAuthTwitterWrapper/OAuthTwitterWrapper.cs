@@ -13,16 +13,16 @@ namespace OAuthTwitterWrapper
         private const string SearchQuery = "%23test";
 		private readonly string searchUrl = string.Format(SearchFormat, SearchQuery);
 
-        public TwitterResponse GetMyTimeline(string url)
+        public TwitterData GetMyTimeline(string url, OAuthData oAuthData)
         {
             timelineUrl = url;
             var authenticate = new Authenticate();
-			TwitAuthenticateResponse twitAuthResponse = authenticate.AuthenticateMe(OAuthConsumerKey, OAuthConsumerSecret, OAuthUrl);
+            TwitAuthenticateResponse twitAuthResponse = authenticate.AuthenticateMe(oAuthData.OAuthConsumerKey, oAuthData.OAuthConsumerSecret, OAuthUrl);
 
             // Do the timeline
 			var timeLineJson = new Utility().RequstJson(timelineUrl, twitAuthResponse.token_type, twitAuthResponse.access_token);
  
-            TwitterResponse response = new TwitterResponse();
+            TwitterData response = new TwitterData();
 
             if (timeLineJson.StartsWith("Error:"))
             {

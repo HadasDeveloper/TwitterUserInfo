@@ -132,7 +132,12 @@ namespace TwitterManager.Helper
         {
             return ExecuteSqlForData(string.Format(StoredProcedures.SqlGetScreenNames)) ?? new DataTable();
         }
-        
+
+        public static DataTable GetoAuthData(string hostname)
+        {
+            return ExecuteSqlForData(string.Format(StoredProcedures.SqlGetoAuthData, hostname)) ?? new DataTable();
+        }
+
         public static bool ExecuteSQL(string sql)
         {
             return ExecuteSQL(sql, CommandType.Text, null);

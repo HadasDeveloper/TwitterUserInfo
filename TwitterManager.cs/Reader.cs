@@ -16,16 +16,18 @@ namespace TwitterManager
         private int authenticateMessageCounter;
         private bool done;
         private string showUserUrl;
+        private OAuthData oAuthData = new OAuthData();
         private const string ShowUserFormat = "https://api.twitter.com/1.1/users/show.json?screen_name={0}";
-
-        private EventLogWriter logWriter = new EventLogWriter("TwitterManager");
-
+        
         public void Read()
         {
             authenticateMessageCounter = 1;
           
             //This function will get the twitter accounts from the db
             List<ScreenNameToLoad> screenNamesToLoad = DataContext.GetScreenNames();
+
+            //This function will get the twitter authentication data for this host name from the db
+            oAuthData = DataContext.GetoAuthData();
 
             //-----------for debuging
             //List<ScreenNameToLoad> screenNamesToLoad = new List<ScreenNameToLoad>();
@@ -66,8 +68,8 @@ namespace TwitterManager
                 OAuthTwitterWrapper.OAuthTwitterWrapper oAuthT = new OAuthTwitterWrapper.OAuthTwitterWrapper();
 
                 showUserUrl = string.Format(ShowUserFormat, screenName);
-                
-                 TwitterResponse info = oAuthT.GetMyTimeline(showUserUrl);
+
+                TwitterData info = oAuthT.GetMyTimeline(showUserUrl, oAuthData);
                 
                 if (info.error !=null)
                 {

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using oAuthTwitterWrapper;
 using TwitterManager.Models;
 
 namespace TwitterManager.Helper
@@ -23,6 +25,19 @@ namespace TwitterManager.Helper
         {
             DataHelper.UpdateScreenNames_finished(screenName);
         }
+
+        public static OAuthData GetoAuthData()
+        {
+            DataTable table = DataHelper.GetoAuthData(Environment.MachineName);
+            OAuthData data = new OAuthData();
+
+            data.OAuthConsumerKey = table.Rows[0].Field<string>("ConsumerKey");
+            data.OAuthConsumerSecret = table.Rows[0].Field<string>("ConsumerSecret");
+
+            return data;
+
+        }
+
         
         public static List<ScreenNameToLoad> GetScreenNames()
         {
