@@ -1,4 +1,5 @@
 ﻿using System;
+using Logger;
 
 namespace TwitterManager.Models
 {
@@ -47,96 +48,105 @@ namespace TwitterManager.Models
         public TwitterUserInfo(dynamic user)
         {
             Console.WriteLine();
-
-            Id = user.id;
-            IdStr = user.id_str;
-
-            string name = user.name;
-            Name = name.Replace('\'', '"');
-
-            string screenName = user.screen_name;
-            ScreenName = screenName.Replace('\'', '"');
-
-            string location = user.location;
-            Location = location.Replace('\'', '"');
-
-            string description = user.description;
-            Description = description.Replace('\'', '"');
-
-            Url = user.url;
-
-            //            Protected = user.protected ;
-
-            FollowersCount = user.followers_count;
-
-            FriendsCount = user.friends_count;
-
-            ListedCount = user.listed_count;
-
             try
             {
-                string temp = user.created_at;
-                string[] date = temp.Split(' ');// date[] = {ddd, MMM, dd, +0000 ,hh:mm:ss, yyyy}
-                string dateToParse = string.Format("{0} {1}, {2} {3}", date[1], date[2], date[5], date[3]);
-                CreatedAt = DateTime.Parse(dateToParse);
-                Console.WriteLine(CreatedAt);
+                Id = user.id;
+            
+            
+                IdStr = user.id_str;
 
+                string name = user.name;
+                Name = name.Replace('\'', '"');
+
+                string screenName = user.screen_name;
+                ScreenName = screenName.Replace('\'', '"');
+
+                string location = user.location;
+                Location = location.Replace('\'', '"');
+
+                string description = user.description;
+                Description = description.Replace('\'', '"');
+
+                Url = user.url;
+
+                //            Protected = user.protected ;
+
+                FollowersCount = user.followers_count;
+
+                FriendsCount = user.friends_count;
+
+                ListedCount = user.listed_count;
+
+                try
+                {
+                    string temp = user.created_at;
+                    string[] date = temp.Split(' ');// date[] = {ddd, MMM, dd, +0000 ,hh:mm:ss, yyyy}
+                    string dateToParse = string.Format("{0} {1}, {2} {3}", date[1], date[2], date[5], date[3]);
+                    CreatedAt = DateTime.Parse(dateToParse);
+                    Console.WriteLine(CreatedAt);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+                FavouritesCount = user.favourites_count;
+
+                UtcOffset = user.utc_offset.Value == null ? 0 : user.utc_offset;
+
+                TimeZone = user.time_zone;
+
+                GeoEnabled = user.geo_enabled;
+
+                Verified = user.verified;
+
+                StatusesCount = user.statuses_count;
+
+                Lang = user.lang;
+
+                ContributorsEnabled = user.contributors_enabled;
+
+                IsTranslator = user.is_translator;
+
+                ProfileBackgroundColor = user.profile_background_color;
+
+                ProfileBackgroundImageUrl = user.profile_background_image_url;
+
+                ProfileBackgroundImageUrlHttps = user.profile_background_image_url_https;
+
+                ProfileBackgroundTile = user.profile_background_tile;
+
+                ProfileImageUrl = user.profile_image_url;
+
+                ProfileImageUrlHttps = user.profile_image_url_https;
+
+                ProfileLinkColor = user.profile_link_color;
+
+                ProfileSidebarBorderColor = user.profile_sidebar_border_color;
+
+                ProfileSidebarFillColor = user.profile_sidebar_fill_color;
+
+                ProfileTextColor = user.profile_text_color;
+
+                ProfileUseBackgroundImage = user.profile_use_background_image;
+
+                DefaultProfile = user.default_profile;
+
+                DefaultProfileImage = user.default_profile_image;
+
+                Following = user.following;
+
+                FollowRequestSent = user.follow_request_sent;
+
+                Notifications = user.notifications;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                //FileLogWriter fileLog = new FileLogWriter();
+                //fileLog.WriteToLog(DateTime.Now, string.Format("TwitterUserInfo =  {0}", e.Message), "Log");
             }
-
-            FavouritesCount = user.favourites_count;
-
-            UtcOffset = user.utc_offset.Value == null ? 0 : user.utc_offset;
-
-            TimeZone = user.time_zone;
-
-            GeoEnabled = user.geo_enabled;
-
-            Verified = user.verified;
-
-            StatusesCount = user.statuses_count;
-
-            Lang = user.lang;
-
-            ContributorsEnabled = user.contributors_enabled;
-
-            IsTranslator = user.is_translator;
-
-            ProfileBackgroundColor = user.profile_background_color;
-
-            ProfileBackgroundImageUrl = user.profile_background_image_url;
-
-            ProfileBackgroundImageUrlHttps = user.profile_background_image_url_https;
-
-            ProfileBackgroundTile = user.profile_background_tile;
-
-            ProfileImageUrl = user.profile_image_url;
-
-            ProfileImageUrlHttps = user.profile_image_url_https;
-
-            ProfileLinkColor = user.profile_link_color;
-
-            ProfileSidebarBorderColor = user.profile_sidebar_border_color;
-
-            ProfileSidebarFillColor = user.profile_sidebar_fill_color;
-
-            ProfileTextColor = user.profile_text_color;
-
-            ProfileUseBackgroundImage = user.profile_use_background_image;
-
-            DefaultProfile = user.default_profile;
-
-            DefaultProfileImage = user.default_profile_image;
-
-            Following = user.following;
-
-            FollowRequestSent = user.follow_request_sent;
-
-            Notifications = user.notifications;
-
         }
     }
 }

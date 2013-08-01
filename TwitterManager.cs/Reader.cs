@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Logger;
+using oAuthTwitterWrapper;
 using TwitterManager.Helper;
 using TwitterManager.Models;
 
@@ -48,8 +49,9 @@ namespace TwitterManager
                 GetUserInfo(screenNameToLoad.ScreenName);
                 pageCounter = 0;
             }
-            Console.WriteLine("Inserting to DB");
-            DataContext.InsertTwitterUser(users);
+           Console.WriteLine(string.Format("Inserting to DB {0} users ",users.Count));
+           
+           DataContext.InsertTwitterUser(users);
 
             while (!DataContext.FinishedFlag)
                 Thread.Sleep(500);
@@ -64,21 +66,18 @@ namespace TwitterManager
                 OAuthTwitterWrapper.OAuthTwitterWrapper oAuthT = new OAuthTwitterWrapper.OAuthTwitterWrapper();
 
                 showUserUrl = string.Format(ShowUserFormat, screenName);
-
-                dynamic info = oAuthT.GetMyTimeline(showUserUrl);
-
-
-                string error = Convert.ToString(info);
-                if (error.Contains("The remote server returned an error:"))
-                {    
-                    DataContext.InsertTwitterError(error, screenName);
-                    return;
+                
+                 TwitterResponse info = oAuthT.GetMyTimeline(showUserUrl);
+                
+                if (info.error !=null)
+                {
+                    DataContext.InsertTwitterError(info.error, screenName);
+                            return;
                 }
-                   
 
-                if(info == null)
+                if(info.json == null)
                     return;
-                users.Add(new TwitterUserInfo(info));
+                users.Add(new TwitterUserInfo(info.json));
 
                 authenticateMessageCounter++;
 

@@ -13,7 +13,7 @@ namespace OAuthTwitterWrapper
         private const string SearchQuery = "%23test";
 		private readonly string searchUrl = string.Format(SearchFormat, SearchQuery);
 
-        public dynamic GetMyTimeline(string url)
+        public TwitterResponse GetMyTimeline(string url)
         {
             timelineUrl = url;
             var authenticate = new Authenticate();
@@ -22,14 +22,21 @@ namespace OAuthTwitterWrapper
             // Do the timeline
 			var timeLineJson = new Utility().RequstJson(timelineUrl, twitAuthResponse.token_type, twitAuthResponse.access_token);
  
-            if(twitAuthResponse.error!=null)
-                return twitAuthResponse.error;
-            
+            TwitterResponse response = new TwitterResponse();
+
+            if (timeLineJson.StartsWith("Error:"))
+            {
+                response.error = timeLineJson;
+                return response;
+            }
+
             if (timeLineJson == string.Empty || timeLineJson == "[]")
                 return null;
 
-            dynamic result = JsonConvert.DeserializeObject<dynamic>(timeLineJson);  
-            return result;
+            dynamic result = JsonConvert.DeserializeObject<dynamic>(timeLineJson);
+            response.json = result;
+            
+            return response;
         }
 
 		public string GetSearch()

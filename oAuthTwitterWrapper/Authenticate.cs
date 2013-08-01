@@ -57,14 +57,12 @@ namespace oAuthTwitterWrapper
 
 		    }
 		    catch (WebException e)
-		    {
+		    { 
                 Console.WriteLine(string.Format("Authenticate.TwitAuthenticateResponse: {0}, {1}", e.Message, e.Status));
                 logWriter.WriteErrorToEventLog(string.Format("Authenticate.TwitAuthenticateResponse: {0}", e.Message));
 
-                twitAuthResponse = new TwitAuthenticateResponse();
-                twitAuthResponse.error = e.Message;
-
-                return twitAuthResponse;
+                //FileLogWriter fileLog = new FileLogWriter();
+                //fileLog.WriteToLog(DateTime.Now, string.Format("Authenticate.TwitAuthenticateResponse: {0}, {1}", e.Message, e.Status), "Log");
 		    }
 		    return new TwitAuthenticateResponse();
 		}
