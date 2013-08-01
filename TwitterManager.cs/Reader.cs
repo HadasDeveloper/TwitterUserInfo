@@ -23,12 +23,18 @@ namespace TwitterManager
         {
             authenticateMessageCounter = 1;
           
-            //This function will get the twitter accounts from the db
-            List<ScreenNameToLoad> screenNamesToLoad = DataContext.GetScreenNames();
-
             //This function will get the twitter authentication data for this host name from the db
             oAuthData = DataContext.GetoAuthData();
+            if(oAuthData == null)
+                return;
 
+            //This function will get the twitter accounts from the db
+            List<ScreenNameToLoad> screenNamesToLoad = DataContext.GetScreenNames();
+            Console.WriteLine(string.Format("Number of screen Names To Load = {0}", screenNamesToLoad.Count));
+
+            if (screenNamesToLoad.Count == 0)
+                return;
+            
             //-----------for debuging
             //List<ScreenNameToLoad> screenNamesToLoad = new List<ScreenNameToLoad>();
             //ScreenNameToLoad tempName = new ScreenNameToLoad();
@@ -36,10 +42,7 @@ namespace TwitterManager
             //screenNamesToLoad.Add(tempName);
             //-----------
 
-            Console.WriteLine(string.Format("Number of screen Names To Load = {0}", screenNamesToLoad.Count));
-
-            if (screenNamesToLoad.Count == 0)
-                return;
+            
 
             int i=0;
             foreach (var screenNameToLoad in screenNamesToLoad)

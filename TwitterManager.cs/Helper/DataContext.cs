@@ -31,11 +31,12 @@ namespace TwitterManager.Helper
             DataTable table = DataHelper.GetoAuthData(Environment.MachineName);
             OAuthData data = new OAuthData();
 
-            data.OAuthConsumerKey = table.Rows[0].Field<string>("ConsumerKey");
-            data.OAuthConsumerSecret = table.Rows[0].Field<string>("ConsumerSecret");
-
+            foreach (DataRow row in table.Rows)
+            {
+                data.OAuthConsumerKey = row.Field<string>("ConsumerKey");
+                data.OAuthConsumerSecret = row.Field<string>("ConsumerSecret");
+            }
             return data;
-
         }
 
         
